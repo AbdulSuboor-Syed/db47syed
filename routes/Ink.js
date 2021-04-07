@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('ink', { title: 'Sreach Result ink' });
+  res.render('inks', { title: 'Sreach Result inks' });
 });
 
 module.exports = router;
