@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div(class="container-fluid")
+  h1= title
+  -var out=[{color:"Black",company:"DIC/Sun Chemical",price:1.40},{color:"Blue",company:"Flint Group",price:2.00},{color:"Green",company:"Toyo Ink",price:1.90}]
+  div(class="row")
+    each value,index in out
+        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{value.color}
+        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{value.company}
+        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{value.price}
+  script.
+     
+      function buy(itemNo)
+      {
+        alert(`You purchased Item ${itemNo+1}`)
+      }
+  
+    
