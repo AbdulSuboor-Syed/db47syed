@@ -1,9 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const ink_controlers= require('../controllers/ink');
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('inks', { title: 'Sreach Result inks' });
-});
-
+router.get('/', ink_controlers.ink_view_all_Page );
 module.exports = router;
