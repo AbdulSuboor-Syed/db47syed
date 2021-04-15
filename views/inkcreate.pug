@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1= title
+
+  form(id='inksForm', action="/resource/inks", method="POST")
+    div.form-group
+        label.inkAttr(for='color') ink color
+        input#color(type='text', name='color')
+    div.form-group
+        label.inkAttr(for='company') ink company
+        input#company(type='text', name='company')
+    div.form-group
+        label.inkAttr(for='price') ink price
+        input#price(type='number', name='price')
+    input(type="submit")
+
+  script.
+    document.forms['inkForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Save succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Save failed " + error )
+      });
+    });

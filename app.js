@@ -7,8 +7,8 @@ var logger = require('morgan');
 const connectionString = process.env.MONGO_CON
 mongoose = require('mongoose');
 mongoose.connect(connectionString,
-  { useNewUrlParser: true, useUnifiedTopology: true }); var indexRouter = require('./routes/index');
-
+  { useNewUrlParser: true, useUnifiedTopology: true }); 
+var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var inksRouter = require('./routes/inks');
 var starsRouter = require('./routes/stars');

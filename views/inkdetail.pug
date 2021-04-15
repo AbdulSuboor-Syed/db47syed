@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+
+  - let inkid = toShow._id
+  - let color = toShow.color
+  - let company = toShow.company
+  - let price = toShow.price
+  div
+    div.row
+      div(style="background-color: aquamarine;width:120px") ink ID is: 
+      div #{inkid}
+    div.row
+      div(style="background-color: blue;width:120px") ink Type is:
+      div #{color}
+    div.row
+      div(style="background-color: red;width:120px") ink Size is:
+      div #{company}
+    div.row
+      div(style="background-color: purple;width:120px") ink Cost is:
+      div #{price}
