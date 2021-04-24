@@ -6,14 +6,22 @@ var logger = require('morgan');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    Account.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
+  function (username, password, done) {
+    Account.findOne({
+      username: username
+    }, function (err, user) {
+      if (err) {
+        return done(err);
+      }
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, {
+          message: 'Incorrect username.'
+        });
       }
       if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, {
+          message: 'Incorrect password.'
+        });
       }
       return done(null, user);
     });
@@ -22,7 +30,7 @@ passport.use(new LocalStrategy(
 const connectionString = process.env.MONGO_CON
 mongoose = require('mongoose');
 mongoose.connect(connectionString,
-  { useNewUrlParser: true, useUnifiedTopology: true }); 
+  { useNewUrlParser: true, useUnifiedTopology: true });
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var inksRouter = require('./routes/inks');
@@ -55,7 +63,13 @@ let reseed = true;
 if (reseed) { recreateDB(); }
 
 var app = express();
-
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -68,9 +82,9 @@ app.use(require('express-session')({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session());
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -83,7 +97,7 @@ app.use('/resource', resourceRouter);
 // passport config
 // Use the existing connection
 // The Account model
-var Account =require('./models/account');
+var Account = require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());

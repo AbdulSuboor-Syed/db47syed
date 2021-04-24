@@ -1,21 +1,31 @@
 extends layout
 
 block content
-  div(class="container-fluid")
   h1= title
-  -var out= results 
-  div(class="row m-1")
-    each value in out
-      - let destination = `dispatch(\"/inks/update?id=${value._id}\")`
-        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{value.color}
-        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{value.company}
-        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{value.price}
-        button.btn( class="btn-primary ml-1", onclick= destination) Update
+  - let inks=results
+  - let destinationcreate = `dispatchCreate(\"/inks/create\")`
+  div(class="container-fluid")
+    button.btn( class="btn-primary ml-1 btn-lg", onclick= destinationcreate) Create
+  div(class="row m-1")   
+    each ink,index in inks
+      - let destinationupdate = `dispatch(\"/inks/update?id=${ink._id}\")`
+      - let destinationdetail =   `dispatch(\"/inks/detail?id=${ink._id}\")`
+      - let destinationdelete = `dispatchDelete(\"/inks/delete?id=${ink._id}\")`
+        div(class="col-sm-4  m-1" style=("font-weight:bolder")) #{ink.color} - #{ink.company} - #{ink.price} 
+          button.btn( class="btn-success ml-1", onclick= destinationdetail) Detail
+          button.btn( class="btn-info ml-1", onclick= destinationupdate) Update
+          button.btn( class="btn-danger ml-1", onclick= destinationdelete) Delete
   script.
-     
-      function dispatch(path)
+      function dispatch(path){
+      window.location.href=path
+      }
+      function buy(itemNo)
       {
+        alert(`You purchased Item ${itemNo+1}`)
+      }
+      function dispatchCreate(path){
         window.location.href=path
       }
-  
-    
+      function dispatchDelete(path){
+        window.location.href=path
+      }  

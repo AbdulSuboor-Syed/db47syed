@@ -40,7 +40,8 @@ exports.ink_create_post = async function (req, res) {
         res.send(result);
     }
     catch (err) {
-        res.send(`{"error": ${err}}`)
+        console.log(err)        
+        res.send(err)
         res.status(500);
     }
 };
@@ -81,7 +82,7 @@ exports.ink_update_put = async function (req, res) {
 exports.ink_view_all_Page = async function (req, res) {
     try {
         theinks = await ink.find();
-        console.log("njfndw")
+        console.log(theinks)
         res.render('inks', { title: 'ink Search Results', results: theinks });
     }
     catch (err) {

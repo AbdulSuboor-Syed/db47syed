@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= title
-
+  div#errors(style:{display:none})
   form(id='inksForm', action="/resource/inks", method="POST")
     div.form-group
         label.inkAttr(for='color') ink color
@@ -25,7 +25,14 @@ block content
       }).then((resp) => {
         return resp.json(); // or resp.text() or whatever the server sends
       }).then((body) => {
-        alert("Save succeded")
+        alert(body.name)
+        if(body.name){
+          document.getElementById("errors").innerHTML=`${body.name}  \n ${body.message}\n`;
+          alert("Save Failed")
+        }
+        else{
+          alert("Save succeded")
+        }
         // TODO handle body
       }).catch((error) => {
         // TODO handle error
